@@ -1,5 +1,5 @@
 {
-    "name": "2upmedia/easy-csv",
+    "name": "jwage/easy-csv",
     "type": "library",
     "description": "Easy CSV manipulation for PHP 5.4+",
     "keywords": ["csv", "read", "write"],
