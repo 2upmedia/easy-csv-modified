@@ -4,8 +4,19 @@ namespace EasyCSV;
 
 abstract class AbstractBase
 {
+    /**
+     * @var \SplFileObject
+     */
     protected $handle;
+
+    /**
+     * @var string
+     */
     protected $delimiter = ',';
+
+    /**
+     * @var string
+     */
     protected $enclosure = '"';
 
     public function __construct($path, $mode = 'r+')
