@@ -6,6 +6,8 @@ class Reader extends AbstractBase
 {
     protected $headersInFirstRow = true;
     protected $headers = false;
+    protected $headerLine = false;
+    protected $lastLine = false;
     protected $line;
     protected $init;
 
@@ -52,7 +54,20 @@ class Reader extends AbstractBase
 
     public function getLineNumber()
     {
-        return $this->line;
+        return $this->handle->key();
+    }
+
+    public function getLastLineNumber()
+    {
+        if( $this->lastLine ) {
+            return $this->lastLine;
+        }
+        $this->handle->seek($this->handle->getSize());
+        $lastLine = $this->handle->key();
+
+        $this->handle->rewind();
+
+        return $this->lastLine = $lastLine;
     }
 
     /**
@@ -75,6 +90,8 @@ class Reader extends AbstractBase
         } else {
             return false; // headers have already been retrieved
         }
+
+        $this->headerLine = $lineNumber;
 
         // seek to headers
         $this->handle->seek( $lineNumber );
