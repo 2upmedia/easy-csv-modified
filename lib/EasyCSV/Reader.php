@@ -71,10 +71,24 @@ class Reader extends AbstractBase
     }
 
     /**
+     * @return array
+     */
+    public function getCurrentRow()
+    {
+        return str_getcsv( $this->handle->current(), $this->delimiter, $this->enclosure );
+    }
+
+    /**
      * @param $lineNumber zero-based index
      */
     public function advanceTo( $lineNumber )
     {
+        if( $this->headerLine > $lineNumber){
+            throw new \LogicException("Line Number $lineNumber is before the header line that was set");
+        } elseif( $this->headerLine === $lineNumber ){
+            throw new \LogicException("Line Number $lineNumber is equal to the header line that was set");
+        }
+
         $this->line = $lineNumber;
 
         $this->handle->seek( $lineNumber );
